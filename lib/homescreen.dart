@@ -2,15 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:workshop_app/data.dart';
 import 'package:workshop_app/detailsscreen.dart';
 
-class Homescreen extends StatefulWidget {
+class Homescreen extends StatelessWidget {
   const Homescreen({super.key});
-
-  @override
-  State<Homescreen> createState() => _HomescreenState();
-}
-
-class _HomescreenState extends State<Homescreen> {
-  int? openIndex;
 
   IconData getIconFromString(String name) {
     switch (name) {
@@ -46,70 +39,48 @@ class _HomescreenState extends State<Homescreen> {
             final places =
                 categories[index]['places'] as List<Map<dynamic, dynamic>>;
 
-            return Column(
-              children: [
-                GestureDetector(
-                  child: Card(
-                    child: Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              Icon(icon),
-                              SizedBox(width: 20),
-                              Text(title),
-                            ],
+            return Card(
+              child: ExpansionTile(
+                collapsedIconColor: Colors.grey,
+                iconColor: Colors.black,
+                leading: Icon(icon),
+                title: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(children: [Text(title)]),
+                ),
+                children: [
+                  Container(
+                    height: 70,
+                    padding: EdgeInsets.all(10),
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: places.length,
+                      itemBuilder: (context, index) {
+                        final name = places[index]['name'];
+                        return GestureDetector(
+                          child: Card(
+                            child: Center(
+                              child: Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Text(name),
+                              ),
+                            ),
                           ),
-                        ],
-                      ),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    Detailsscreen(place: places[index]),
+                              ),
+                            );
+                          },
+                        );
+                      },
                     ),
                   ),
-                  onTap: () {
-                    setState(() {
-                      if (openIndex == index) {
-                        openIndex = null;
-                      } else {
-                        openIndex = index;
-                      }
-                    });
-                  },
-                ),
-                (openIndex == index)
-                    ? Card(
-                        child: Container(
-                          height: 70,
-                          padding: EdgeInsets.all(10),
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: places.length,
-                            itemBuilder: (context, index) {
-                              final name = places[index]['name'];
-                              return GestureDetector(
-                                child: Card(
-                                  child: Center(
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(10.0),
-                                      child: Text(name),
-                                    ),
-                                  ),
-                                ),
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          Detailsscreen(place: places[index]),
-                                    ),
-                                  );
-                                },
-                              );
-                            },
-                          ),
-                        ),
-                      )
-                    : SizedBox.shrink(),
-              ],
+                ],
+              ),
             );
           },
         ),
