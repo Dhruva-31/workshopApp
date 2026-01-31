@@ -1,10 +1,8 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 
-class Detailsscreen extends StatelessWidget {
+class DetailsScreenWithCons extends StatelessWidget {
   final Map<dynamic, dynamic> place;
-  const Detailsscreen({super.key, required this.place});
-
+  const DetailsScreenWithCons({super.key, required this.place});
   @override
   Widget build(BuildContext context) {
     final String name = place['name'];

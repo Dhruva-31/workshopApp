@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:workshop_app/data.dart';
-import 'package:workshop_app/detailsscreen.dart';
+import 'package:workshop_app/detailsScreenWithCons.dart';
 
 class Homescreen extends StatelessWidget {
   const Homescreen({super.key});
@@ -25,19 +25,17 @@ class Homescreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final data = campusData;
-    final categories = data['categories'] as List;
     return Scaffold(
       appBar: AppBar(title: Text('Campus Explorer')),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: ListView.builder(
-          itemCount: categories.length,
+          itemCount: data.length,
           itemBuilder: (context, index) {
-            final title = categories[index]['title'].toString();
-            final iconString = categories[index]['icon'].toString();
+            final title = data[index]['title'].toString();
+            final iconString = data[index]['icon'].toString();
             final icon = getIconFromString(iconString);
-            final places =
-                categories[index]['places'] as List<Map<dynamic, dynamic>>;
+            final places = data[index]['places'] as List<Map<dynamic, dynamic>>;
 
             return Card(
               child: ExpansionTile(
@@ -71,7 +69,7 @@ class Homescreen extends StatelessWidget {
                               context,
                               MaterialPageRoute(
                                 builder: (context) =>
-                                    Detailsscreen(place: places[index]),
+                                    DetailsScreenWithCons(place: places[index]),
                               ),
                             );
                           },
