@@ -47,6 +47,7 @@ class DetailsScreenWithCons extends StatelessWidget {
                         height: 30,
                         child: Center(child: Text(rating.toString())),
                       ),
+                      SizedBox(width: 100),
                       Icon(Icons.star_outline, size: 18),
                     ],
                   ),
